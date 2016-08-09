@@ -87,7 +87,10 @@ services:
   apache:
    image: httpd:2.4.20
    command: "sh -c 'rm -f /usr/local/apache2/htdocs/index.html && httpd-foreground'"
+   links:
+    - drupal:docker
    expose:
+    - 80
     - 9000
    ports:
     - "9000:9000"
