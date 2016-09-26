@@ -18,12 +18,12 @@ class ResourcesPage < StandardisedSearch
   elements(:result_date)           { |b| b.spans(css: '.result-details .created-date') }
   elements(:result_tags)           { |b| b.spans(class: 'tag') }
 
-  action(:filter_by_blog_posts)    { |p| p.blog_posts.when_present.click }
-  action(:filter_by_book)          { |p| p.books.when_present.click }
-  action(:filter_by_code_artifact) { |p| p.code.when_present.click }
-  action(:filter_by_get_started)   { |p| p.get_started.when_present.click }
-  action(:filter_by_knowledgebase) { |p| p.knowledgebase.when_present.click }
-  action(:filter_by_video)         { |p| p.video.when_present.click }
+  action(:filter_by_blog_posts)    { |p| p.blog_posts.click }
+  action(:filter_by_book)          { |p| p.books.click }
+  action(:filter_by_code_artifact) { |p| p.code.click }
+  action(:filter_by_get_started)   { |p| p.get_started.click }
+  action(:filter_by_knowledgebase) { |p| p.knowledgebase.click }
+  action(:filter_by_video)         { |p| p.video.click }
 
   def any_checked?
     checkboxes_arr = []
@@ -45,12 +45,12 @@ class ResourcesPage < StandardisedSearch
   end
 
   def filter_by_product(product)
-    product_filter.when_present.select(product)
+    product_filter.select(product)
     wait_for_results
   end
 
   def filter_by_publish_date(date_type)
-    publish_date.when_present.select(date_type)
+    publish_date.select(date_type)
     wait_for_results
   end
 
