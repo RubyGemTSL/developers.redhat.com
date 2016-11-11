@@ -92,7 +92,6 @@ class Browsers
     caps_opts = {'chrome.switches' => chrome_switches}
 
     if device_name == nil
-      puts "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
       caps = Selenium::WebDriver::Remote::Capabilities.chrome(caps_opts)
       caps['chromeOptions'] = {'prefs' => chrome_prefs}
     else
