@@ -18,7 +18,7 @@ class ProductOverviewPage < SiteBase
   end
 
   def toggle_product_menu
-    if is_mobile?
+    if side_nav_toggle.present?
       side_nav_toggle.click
       side_nav_open
     else
@@ -27,7 +27,7 @@ class ProductOverviewPage < SiteBase
   end
 
   def side_nav_item_displayed?(nav_item)
-    side_nav.text.include?(nav_item)
+    side_nav.text.downcase.include?(nav_item.downcase)
   end
 
   def click_to_download(url)

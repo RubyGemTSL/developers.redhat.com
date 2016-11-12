@@ -6,9 +6,10 @@ class ResourcesPage < StandardisedSearch
   #page_title('Discover the developer materials Red Hat has to offer')
 
   element(:blog_posts)             { |b| b.element(xpath: "//label[@for='blogposts']") }
-  element(:books)                  { |b| b.element(xpath: "//label[@for='book']") }
+  element(:book)                   { |b| b.element(xpath: "//label[@for='book']") }
   element(:code)                   { |b| b.element(xpath: "//label[@for='code']") }
   element(:get_started)            { |b| b.element(xpath: "//label[@for='get-started']") }
+  element(:code_artifact)          { |b| b.element(xpath: "//label[@for='code']") }
   element(:knowledgebase)          { |b| b.element(xpath: "//label[@for='knowledge']") }
   element(:video)                  { |b| b.element(xpath: "//label[@for='video']") }
   elements(:checkbox_filters)      { |b| b.checkboxes(css: 'input[type="checkbox"]') }
@@ -18,12 +19,11 @@ class ResourcesPage < StandardisedSearch
   elements(:result_date)           { |b| b.spans(css: '.result-details .created-date') }
   elements(:result_tags)           { |b| b.spans(class: 'tag') }
 
-  action(:filter_by_blog_posts)    { |p| p.blog_posts.click }
-  action(:filter_by_book)          { |p| p.books.click }
-  action(:filter_by_code_artifact) { |p| p.code.click }
-  action(:filter_by_get_started)   { |p| p.get_started.click }
-  action(:filter_by_knowledgebase) { |p| p.knowledgebase.click }
-  action(:filter_by_video)         { |p| p.video.click }
+
+  def filter_by(type)
+    myelement = send("#{type.downcase.gsub(' ', '_')}")
+    myelement.fire_event('click')
+  end
 
   def any_checked?
     checkboxes_arr = []

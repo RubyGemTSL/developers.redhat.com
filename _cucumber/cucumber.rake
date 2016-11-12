@@ -29,12 +29,13 @@ task :_features do
   test_runner = TestRunner.new
   test_runner.cleanup(@profile)
   @exit_status = test_runner.run(@profile, tags)
+  return @exit_status
 end
 
 task :report_builder do
   test_runner = TestRunner.new
   test_runner.generate_report(@profile)
-  exit(@exit_status)
+  return @exit_status
 end
 
 task :wip do
