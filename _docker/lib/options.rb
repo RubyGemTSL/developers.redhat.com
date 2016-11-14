@@ -101,7 +101,7 @@ class Options
         tasks[:build] = true
         tasks[:scale_grid] = "#{ENV['RHD_DOCKER_DRIVER']}=#{browser_scale}"
         tasks[:supporting_services] = [ENV['RHD_DOCKER_DRIVER']]
-        tasks[:ci_acceptance_test_target_task] = ['--rm', '--service-ports','acceptance_tests', "bundle exec rake ci HOST_TO_TEST=#{ENV['HOST_TO_TEST']}"]
+        tasks[:acceptance_test_target_task] = ['--rm', '--service-ports','acceptance_tests', "bundle exec rake ci HOST_TO_TEST=#{ENV['HOST_TO_TEST']}"]
       end
 
       opts.on('--acceptance_test_profile RHD_TEST_PROFILE', String, 'Set the profile for the acceptance tests') do |profile|

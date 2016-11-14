@@ -217,10 +217,10 @@ class TestOptions < Minitest::Test
   end
 
   def test_ci_acceptance_test_target_task
-      tasks = Options.parse (["--acceptance_test_target=http://example.com"])
-      assert(tasks[:build])
-      assert_equal('http://example.com', ENV['HOST_TO_TEST'])
-      assert_equal(["--rm", "--service-ports", "acceptance_tests", "bundle exec rake ci HOST_TO_TEST=#{ENV['HOST_TO_TEST']}"], tasks[:ci_acceptance_test_target_task])
+    tasks = Options.parse (["--ci_acceptance_test_target=http://example.com"])
+    assert(tasks[:build])
+    assert_equal('http://example.com', ENV['HOST_TO_TEST'])
+    assert_equal(["--rm", "--service-ports", "acceptance_tests", "bundle exec rake ci HOST_TO_TEST=#{ENV['HOST_TO_TEST']}"], tasks[:acceptance_test_target_task])
   end
 
   def test_acceptance_test_profile_task
