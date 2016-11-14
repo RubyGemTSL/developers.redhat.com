@@ -14,7 +14,7 @@ class JenkinsTestRunner
   end
 
   def execute_test(profile)
-    system("bundle exec ruby #{@control_script_location} -e drupal-dev --acceptance_test_target=#{@host_to_test} --acceptance_test_profile=#{profile}")
+    system("bundle exec ruby #{@control_script_location} -e drupal-pull-request --acceptance_test_profile=#{profile} --acceptance_test_target=#{@host_to_test}")
   end
 
   private :execute_test
