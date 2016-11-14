@@ -3,21 +3,6 @@ require_relative 'test_runner'
 
 task :features => [:_features, :report_builder]
 
-task :ci do
-  success = true
-  jobs = %w(desktop mobile kc_dm)
-  jobs.each { |profile|
-    ENV['RHD_TEST_PROFILE'] = profile
-    test_runner = TestRunner.new
-    test_runner.set_ci_test_env_variables(profile)
-    test_runner.cleanup(profile)
-    test_runner.initialize_report(profile)
-    success = test_runner.run(profile)
-    test_runner.generate_report
-  }
-  exit(success ? 0 : 1)
-end
-
 task :_features do
 
   if ENV['RHD_TEST_PROFILE']
@@ -49,7 +34,7 @@ end
 task :report_builder do
   test_runner = TestRunner.new
   test_runner.initialize_report(@profile)
-  test_runner.generate_report
+  test_runner.generate_report(@profile)
   exit(@exit_status)
 end
 

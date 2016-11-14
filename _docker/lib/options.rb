@@ -85,17 +85,6 @@ class Options
 
       opts.on('--acceptance_test_target HOST_TO_TEST', String, 'runs the cucumber features against the specified HOST_TO_TEST') do |host|
         ENV['HOST_TO_TEST'] = host
-        ENV['RHD_DOCKER_DRIVER'] = 'docker_chrome'
-        browser_scale = ENV['RHD_BROWSER_SCALE'] || '2'
-        tasks[:kill_all] = false
-        tasks[:build] = true
-        tasks[:scale_grid] = "#{ENV['RHD_DOCKER_DRIVER']}=#{browser_scale}"
-        tasks[:supporting_services] = [ENV['RHD_DOCKER_DRIVER']]
-        tasks[:acceptance_test_target_task] = ['--rm', '--service-ports','acceptance_tests', "bundle exec rake ci HOST_TO_TEST=#{ENV['HOST_TO_TEST']}"]
-      end
-
-      opts.on('--dev_acceptance_test_target HOST_TO_TEST', String, 'runs the cucumber features against the specified HOST_TO_TEST') do |host|
-        ENV['HOST_TO_TEST'] = host
         browser_scale = ENV['RHD_BROWSER_SCALE'] || '2'
         tasks[:kill_all] = false
         tasks[:build] = true
@@ -105,23 +94,17 @@ class Options
       end
 
       opts.on('--acceptance_test_profile RHD_TEST_PROFILE', String, 'Set the profile for the acceptance tests') do |profile|
-        ENV['RHD_TEST_PROFILE'] = profile
-        profiles = %w(desktop mobile kc_dm)
-        raise("#{profile} is not a recognised cucumber profile, see cucumber.yml file in project root") unless profiles.include?(profile)
-      end
 
-      opts.on('--acceptance_test_driver RHD_JS_DRIVER', String, 'Set the driver for the acceptance tests') do |driver|
-        ENV['RHD_JS_DRIVER'] = driver
-        case driver
-          when 'docker_chrome'
-            ENV['RHD_DOCKER_DRIVER'] = 'docker_chrome'
-          when 'docker_firefox'
-            ENV['RHD_DOCKER_DRIVER'] = 'docker_firefox'
+        ENV['RHD_TEST_PROFILE'] = profile
+        case profile
+          when 'desktop'
+            ENV['ACCEPTANCE_TEST_DESCRIPTION'] = 'Drupal:FE Acceptance Tests'
+          when 'mobile'
+            ENV['ACCEPTANCE_TEST_DESCRIPTION'] = 'Drupal:FE Mobile Acceptance Tests'
+          when 'kc_dm'
+            ENV['ACCEPTANCE_TEST_DESCRIPTION'] = 'Drupal:FE KC/DM Acceptance Tests'
           else
-            json = File.read('../_cucumber/driver/device_config/chromium_devices.json')
-            config = JSON.parse(json)
-            raise "Invalid device specified! Expected device '#{driver}' was not found \n see available test devices here: '../_cucumber/driver/device_config/chromium_devices.json'" unless config.include?(driver)
-            ENV['RHD_DOCKER_DRIVER'] = 'docker_chrome'
+            raise("#{profile} is not a recognised cucumber profile, see cucumber.yml file in project root")
         end
       end
 

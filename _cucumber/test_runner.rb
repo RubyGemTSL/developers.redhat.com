@@ -28,23 +28,6 @@ class TestRunner
     $?.exitstatus
   end
 
-  def set_ci_test_env_variables(profile)
-    case profile
-      when 'desktop'
-        ENV['ACCEPTANCE_TEST_DESCRIPTION'] = 'Drupal:Desktop FE Acceptance Tests'
-        ENV['RHD_JS_DRIVER'] = 'docker_chrome'
-      when 'mobile'
-        ENV['ACCEPTANCE_TEST_DESCRIPTION'] = 'Drupal:Mobile FE Acceptance Tests'
-        ENV['RHD_JS_DRIVER'] = 'iphone_6'
-      when 'kc_dm'
-        ENV['ACCEPTANCE_TEST_DESCRIPTION'] = 'Drupal:Desktop FE KC/DM Acceptance Tests'
-        ENV['RHD_JS_DRIVER'] = 'docker_chrome'
-      else
-        profiles = %w(desktop mobile kc_dm)
-        raise("#{profile} is not a recognised cucumber profile, see cucumber.yml file in project root") unless profiles.include?(profile)
-    end
-  end
-
   def rerun(profile)
     puts ColorizedString.new('. . . . . There were failures during the test run! Attempt one of rerunning failed scenarios . . . . .').red
     command = system('bundle exec cucumber --profile rerun_failures')
@@ -55,7 +38,7 @@ class TestRunner
     $?.exitstatus
   end
 
-  def initialize_report(profile)
+  def generate_report(profile)
     ReportBuilder.configure do |config|
       config.json_path = "_cucumber/reports/#{profile}"
       config.report_path = "_cucumber/reports/#{profile}/rhd_#{profile}_test_report"
@@ -64,9 +47,6 @@ class TestRunner
       config.report_title = "RHD #{profile.capitalize} Test Report"
       config.compress_images = true
     end
-  end
-
-  def generate_report
     ReportBuilder.build_report
   end
 
