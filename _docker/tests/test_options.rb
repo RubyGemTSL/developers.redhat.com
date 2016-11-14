@@ -205,8 +205,15 @@ class TestOptions < Minitest::Test
   end
 
   def test_acceptance_test_target_task
+    tasks = Options.parse (["--acceptance_test_target=http://example.com"])
+    assert(tasks[:build])
+    assert_equal('http://example.com', ENV['HOST_TO_TEST'])
+    assert_equal(["--rm", "--service-ports", "acceptance_tests", "bundle exec rake ci HOST_TO_TEST=#{ENV['HOST_TO_TEST']}"], tasks[:acceptance_test_target_task])
+  end
+
+  def dev_acceptance_test_target_task
     ClimateControl.modify RHD_TEST_PROFILE: 'desktop', RHD_JS_DRIVER: 'docker_chrome', ACCEPTANCE_TEST_DESCRIPTION: 'Drupal:FE Acceptance Tests' do
-      tasks = Options.parse (["--acceptance_test_target=http://example.com"])
+      tasks = Options.parse (["--dev_acceptance_test_target=http://example.com"])
       assert(tasks[:build])
       assert_equal('http://example.com', ENV['HOST_TO_TEST'])
       assert_equal('desktop', ENV['RHD_TEST_PROFILE'])
@@ -214,13 +221,6 @@ class TestOptions < Minitest::Test
       assert_equal('Drupal:FE Acceptance Tests', ENV['ACCEPTANCE_TEST_DESCRIPTION'])
       assert_equal(["--rm", "--service-ports", "acceptance_tests", "bundle exec rake features HOST_TO_TEST=#{ENV['HOST_TO_TEST']} RHD_JS_DRIVER=#{ENV['RHD_JS_DRIVER']} RHD_TEST_PROFILE=#{ENV['RHD_TEST_PROFILE']}"], tasks[:acceptance_test_target_task])
     end
-  end
-
-  def test_ci_acceptance_test_target_task
-    tasks = Options.parse (["--ci_acceptance_test_target=http://example.com"])
-    assert(tasks[:build])
-    assert_equal('http://example.com', ENV['HOST_TO_TEST'])
-    assert_equal(["--rm", "--service-ports", "acceptance_tests", "bundle exec rake ci HOST_TO_TEST=#{ENV['HOST_TO_TEST']}"], tasks[:acceptance_test_target_task])
   end
 
   def test_acceptance_test_profile_task

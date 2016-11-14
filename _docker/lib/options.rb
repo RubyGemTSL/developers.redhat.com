@@ -85,16 +85,6 @@ class Options
 
       opts.on('--acceptance_test_target HOST_TO_TEST', String, 'runs the cucumber features against the specified HOST_TO_TEST') do |host|
         ENV['HOST_TO_TEST'] = host
-        browser_scale = ENV['RHD_BROWSER_SCALE'] || '2'
-        tasks[:kill_all] = false
-        tasks[:build] = true
-        tasks[:scale_grid] = "#{ENV['RHD_DOCKER_DRIVER']}=#{browser_scale}"
-        tasks[:supporting_services] = [ENV['RHD_DOCKER_DRIVER']]
-        tasks[:acceptance_test_target_task] = ['--rm', '--service-ports','acceptance_tests', "bundle exec rake features HOST_TO_TEST=#{ENV['HOST_TO_TEST']} RHD_JS_DRIVER=#{ENV['RHD_JS_DRIVER']} RHD_TEST_PROFILE=#{ENV['RHD_TEST_PROFILE']}"]
-      end
-
-      opts.on('--ci_acceptance_test_target HOST_TO_TEST', String, 'runs the cucumber features against the specified HOST_TO_TEST on Jenkins') do |host|
-        ENV['HOST_TO_TEST'] = host
         ENV['RHD_DOCKER_DRIVER'] = 'docker_chrome'
         browser_scale = ENV['RHD_BROWSER_SCALE'] || '2'
         tasks[:kill_all] = false
@@ -102,6 +92,16 @@ class Options
         tasks[:scale_grid] = "#{ENV['RHD_DOCKER_DRIVER']}=#{browser_scale}"
         tasks[:supporting_services] = [ENV['RHD_DOCKER_DRIVER']]
         tasks[:acceptance_test_target_task] = ['--rm', '--service-ports','acceptance_tests', "bundle exec rake ci HOST_TO_TEST=#{ENV['HOST_TO_TEST']}"]
+      end
+
+      opts.on('--dev_acceptance_test_target HOST_TO_TEST', String, 'runs the cucumber features against the specified HOST_TO_TEST') do |host|
+        ENV['HOST_TO_TEST'] = host
+        browser_scale = ENV['RHD_BROWSER_SCALE'] || '2'
+        tasks[:kill_all] = false
+        tasks[:build] = true
+        tasks[:scale_grid] = "#{ENV['RHD_DOCKER_DRIVER']}=#{browser_scale}"
+        tasks[:supporting_services] = [ENV['RHD_DOCKER_DRIVER']]
+        tasks[:acceptance_test_target_task] = ['--rm', '--service-ports','acceptance_tests', "bundle exec rake features HOST_TO_TEST=#{ENV['HOST_TO_TEST']} RHD_JS_DRIVER=#{ENV['RHD_JS_DRIVER']} RHD_TEST_PROFILE=#{ENV['RHD_TEST_PROFILE']}"]
       end
 
       opts.on('--acceptance_test_profile RHD_TEST_PROFILE', String, 'Set the profile for the acceptance tests') do |profile|
