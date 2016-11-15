@@ -33,7 +33,6 @@ end
 
 task :report_builder do
   test_runner = TestRunner.new
-  test_runner.initialize_report(@profile)
   test_runner.generate_report(@profile)
   exit(@exit_status)
 end
