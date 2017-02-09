@@ -17,6 +17,7 @@ class TestJenkinsTestRunner < Minitest::Test
   def clear_environment
     ENV['CUCUMBER_TAGS'] = nil
     ENV['ghprbActualCommit'] = nil
+    ENV['STUBBED_DATA'] = nil
   end
 
   def test_should_exit_with_status_zero_if_all_success
