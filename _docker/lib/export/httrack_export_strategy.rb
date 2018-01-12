@@ -27,7 +27,7 @@ class HttrackExportStrategy
   # Export the given links, from the specified drupal host into the given export directory
   #
   def export!(links_file, drupal_host, export_directory)
-
+    @export_inspector.verify_all_critical_pages(export_directory, links_file)
     cache_updates = check_and_roll_over_cache(export_directory, drupal_host)
 
     if check_if_update_to_existing_export(export_directory)

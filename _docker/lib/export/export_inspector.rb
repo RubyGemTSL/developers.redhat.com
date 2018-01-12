@@ -51,17 +51,36 @@ class ExportInspector
   end
 
   #
+  # ensures that critical pages are in the URL list to be exported
+  #
+  def verify_all_critical_pages(export_directory, links_file)
+    critical_pages = []
+    missing_pages = []
+    File.open("#{export_directory}/critical-pages.txt", 'r').each_line do |line|
+      temp = line.chop.split("\t")
+      critical_pages << temp[0]
+    end
+    critical_pages.each do |page|
+      unless links_file.include?(page)
+        missing_pages << page
+      end
+      if missing_pages.size > 0
+        raise StandardError.new("#{links_file} did not contain all critical pages." "Missing links were #{missing_pages}. Failing export process.")
+      end
+    end
+  end
+
+  #
   # Inspects the export to see if everything is there as expected.
   #
   def inspect_export(url_list, export_directory)
-
     puts '================================ EXPORT SUMMARY ================================'
 
     total_pages = 0
     missing_pages = 0
 
-    File.open(url_list,'r') do | file |
-      file.each_line do | line |
+    File.open(url_list, 'r') do |file|
+      file.each_line do |line|
 
         url = line.strip
         expected_file_system_path = determine_expected_filesystem_path(url)
