@@ -1,4 +1,5 @@
 require 'uri/http'
+require_relative '../default_logger'
 
 #
 # The purpose of this class is to inspect an export directory to ensure that all pages that should be there, are in fact there.
@@ -11,6 +12,11 @@ require 'uri/http'
 # @author rblake@redhat.com
 #
 class ExportInspector
+
+  def initialize(critical_links_file = "#{File.dirname(__FILE__)}/critical-links.txt")
+    @critical_links_file = critical_links_file
+    @log = DefaultLogger.logger
+  end
 
   #
   # Determines the filesystem path at which the .html page export should exist
@@ -45,7 +51,7 @@ class ExportInspector
     expected_path = File.join export_directory, expected_file_path
     exists = File.exist?(expected_path)
     unless exists
-      puts "WARNING: Cannot locate export of '#{url}' at expected path: '#{expected_path}'"
+      puts"WARNING: Cannot locate export of '#{url}' at expected path: '#{expected_path}'"
     end
     exists
   end
@@ -53,27 +59,34 @@ class ExportInspector
   #
   # ensures that critical pages are in the URL list to be exported
   #
-  def verify_all_critical_pages(export_directory, links_file)
+  def verify_all_critical_pages!(links_file)
+
+    @log.info('Checking all critical links are present in sitemap.xml and export...')
     critical_pages = []
-    missing_pages = []
-    File.open("#{export_directory}/critical-pages.txt", 'r').each_line do |line|
-      temp = line.chop.split("\t")
-      critical_pages << temp[0]
+    File.open(@critical_links_file, 'r').each_line do |line|
+      critical_pages << line.chomp
+      @log.info("\tChecking for presence of critical link '#{critical_pages.last}'...")
     end
-    critical_pages.each do |page|
-      unless links_file.include?(page)
-        missing_pages << page
-      end
-      if missing_pages.size > 0
-        raise StandardError.new("#{links_file} did not contain all critical pages." "Missing links were #{missing_pages}. Failing export process.")
+
+    File.open(links_file, 'r').each_line do | line |
+      critical_pages.delete_if do | critical_link |
+        line.chomp.end_with?(critical_link)
       end
     end
+
+    if critical_pages.size > 0
+      raise(StandardError, "The export list or sitemap.xml did not contain all critical pages. Missing critical pages  are #{critical_pages}. Failing export process.")
+    end
+
+    @log.info('All critical links are present in sitemap.xml and export.')
+
   end
 
   #
   # Inspects the export to see if everything is there as expected.
   #
   def inspect_export(url_list, export_directory)
+
     puts '================================ EXPORT SUMMARY ================================'
 
     total_pages = 0
@@ -97,7 +110,7 @@ class ExportInspector
       puts "WARNING: Of '#{total_pages}' pages, '#{missing_pages}' are not found in the export."
 
       if should_fail_on_missing_content
-        raise StandardError.new("There are '#{missing_pages}' pages missing from the site export (see warnings for missing content). Failing export process.")
+        raise(StandardError,"There are '#{missing_pages}' pages missing from the site export (see warnings for missing content). Failing export process.")
       end
 
     end
