@@ -20,14 +20,6 @@ export class ProductOverview extends Page {
         return this.click(this.getSelector('downloadBtn'));
     }
 
-    awaitDownload() {
-        return this.awaitHelloWorldPage() && this.awaitDownloadThankYou();
-    }
-
-    awaitHelloWorldPage() {
-        return this.waitForUrlContaining(`/products/${this.productCode}/hello-world/`, 60000);
-    }
-
     awaitDownloadThankYou() {
         return this.awaitIsVisible(this.getSelector('downloadThankYou'), 60000);
     }

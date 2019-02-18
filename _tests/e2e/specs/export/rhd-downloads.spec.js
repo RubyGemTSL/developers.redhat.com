@@ -8,34 +8,40 @@ import {Utils} from '../support/Utils';
 const tags = require('mocha-tags');
 
 tags('desktop').describe('Download Manager', function () {
-    this.retries(2);
+    // this.retries(2);
 
     beforeEach(function () {
-        let downloadDir = new DownloadDir();
-        downloadDir.clear(global.downloadDir);
-        new Utils().cleanSession();
-    }, 2);
+        if (process.env.RHD_JS_DRIVER === 'chrome') {
+            let downloadDir = new DownloadDir();
+            downloadDir.clear(global.downloadDir);
+            new Utils().cleanSession();
+        }
+    });
 
     tags('dm')
-        .it('@sanity : should allow users to login in and download RHEL', function () {
-            let downloadDir = new DownloadDir();
+        .it('@wip: should allow users to login in and download RHEL', function () {
+            // let downloadDir = new DownloadDir();
             let siteUser = new User(process.env.RHD_BASE_URL).rhdAccountDetails();
             let login = new Login();
             let productOverview = new ProductOverview('rhel', 'download', 'Red Hat Enterprise Linux');
             productOverview
                 .open();
-            productOverview
-                .download();
-            login
-                .with(siteUser);
-            productOverview
-                .awaitDownload();
-            let downloadName = downloadDir.get();
-            expect(downloadName.toString(), 'rhel download was not triggered').to.include('rhel');
+             productOverview
+                 .download();
+             login
+                 .awaitLogin();
+             login
+                 .with(siteUser);
+            // productOverview
+            //      .awaitDownloadThankYou();
+            if (process.env.RHD_JS_DRIVER === 'chrome') {
+                let downloadName = downloadDir.get();
+                expect(downloadName.toString(), 'rhel download was not triggered').to.include('rhel');
+            }
         });
 
     tags('dm')
-        .it('@sanity : should allow users to log-in and download advanced-linux-commands', function () {
+        .it('@sanity: should allow users to log-in and download advanced-linux-commands', function () {
             let downloadDir = new DownloadDir();
             let siteUser = new User(process.env.RHD_BASE_URL).rhdAccountDetails();
             let login = new Login();
@@ -50,13 +56,17 @@ tags('desktop').describe('Download Manager', function () {
                 .with(siteUser);
             cheatSheet
                 .awaitDownloadThankYou();
-            let downloadName = downloadDir.get();
-            expect(downloadName.toString(), 'rhel advanced linux cheatsheet download was not triggered').to.include('rheladvancedlinux_cheat_sheet')
+            if (process.env.RHD_JS_DRIVER === 'chrome') {
+                let downloadName = downloadDir.get();
+                expect(downloadName.toString(), 'rhel advanced linux cheatsheet download was not triggered').to.include('rheladvancedlinux_cheat_sheet')
+            }
         });
 
     afterEach(function () {
-        let downloadDir = new DownloadDir();
-        downloadDir.clear(global.downloadDir);
-        new Utils().cleanSession();
-    }, 2);
+        if (process.env.RHD_JS_DRIVER === 'chrome') {
+            let downloadDir = new DownloadDir();
+            downloadDir.clear(global.downloadDir);
+            new Utils().cleanSession();
+        }
+    });
 });

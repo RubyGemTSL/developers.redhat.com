@@ -7,19 +7,20 @@ import {SearchResultSort} from './components/search/SearchResultSort';
 export class Search extends Page {
 
     constructor() {
-        super({
-            path: '/search/',
-            pageTitle: 'Search Results',
-        });
+        super();
 
         this.addSelectors({
-            searchPage: '.searchpage-middle',
+            searchPage: '//rhdp-search-results'
         });
 
         this.filter = new SearchFilter();
         this.results = new SearchResults();
         this.oneBox = new SearchOneBox();
         this.resultSort = new SearchResultSort();
+    }
+
+    for(searchTerm) {
+        return this.visit(`/search/?t=${searchTerm}`)
     }
 
     awaitSearchPage() {

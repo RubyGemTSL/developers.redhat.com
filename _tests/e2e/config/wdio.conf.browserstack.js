@@ -8,6 +8,7 @@ let browserstackBrowserCaps = browserstackBrowser[process.env.RHD_JS_DRIVER];
 // clone base config and add new properties/overrides
 var browserstackConfig = Object.assign(baseConfig, {
 
+    services: ['browserstack'],
     user: process.env.RHD_BS_USERNAME,
     key: process.env.RHD_BS_AUTHKEY,
     browserstackLocal: true,
@@ -19,11 +20,12 @@ var browserstackConfig = Object.assign(baseConfig, {
         browser_version: browserstackBrowserCaps['browser_version'],
         os: browserstackBrowserCaps['os'],
         os_version: browserstackBrowserCaps['os_version'],
-        resolution: browserstackBrowserCaps['resolution'],
-        'browserstack.local': true
+        // resolution: browserstackBrowserCaps['resolution'],
+        'browserstack.local': true,
+        'browserstack.debug': true
     }],
     services: ['browserstack'],
-    maxInstances: 1
+    maxInstances: 5
 });
 
 exports.config = browserstackConfig;

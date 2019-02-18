@@ -34,12 +34,6 @@ export class PageExtension {
         }, timeout, `Timed out after ${timeout} seconds waiting for url to contain ${string}`);
     }
 
-    waitForSelectorContainingText(selector, string, timeout = 10000) {
-        browser.waitUntil(function () {
-            return browser.getText(selector).indexOf(string) > -1;
-        }, timeout, `Timed out after ${timeout} seconds waiting for selector to contain ${string}`);
-    }
-
     element(selector) {
         let element = browser.element(selector);
         this.awaitExists(element);
@@ -63,8 +57,7 @@ export class PageExtension {
 
     awaitIsVisible(selector, timeout = 10000) {
         if (typeof selector === 'string') {
-            browser.waitForVisible(selector, timeout);
-            return true;
+            return browser.waitForVisible(selector, timeout);
         } else {
             return selector.waitForVisible(timeout);
         }
@@ -79,7 +72,6 @@ export class PageExtension {
     }
 
     type(input, selector) {
-        this.awaitIsVisible(selector);
         if (typeof selector === 'string') {
             return browser.setValue(selector, input);
         } else {
@@ -90,17 +82,19 @@ export class PageExtension {
     click(selector) {
         this.hideCookieBanner();
         this.awaitExists(selector);
-        if (typeof selector === 'string') {
-            return browser.click(selector);
-        } else {
-            return selector.click();
+        let el = this.element(selector);
+        try {
+            let location = el.getLocationInView();
+            el.scroll(location['x'], location['y']);
+            return el.click();
+        } catch (e) {
+            return el.click();
         }
     }
 
     getValue(selector) {
         if (typeof selector === 'string') {
             return browser.getValue(selector);
-
         } else {
             return selector.getValue();
         }
@@ -163,10 +157,12 @@ export class PageExtension {
     }
 
     hideCookieBanner() {
-        if (this.displayed('#redhat-cookie-privacy-banner')) {
+        try {
             browser.execute(function () {
                 return document.getElementById('redhat-cookie-privacy-banner').style.display = 'none'
             });
+            this.pause()
+        } catch (e) {
         }
     }
 }

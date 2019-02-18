@@ -64,7 +64,7 @@ export class NavigationBar extends Page {
 
     searchFor(searchTerm) {
         this.enterSearch(searchTerm);
-        this.triggerSearch();
+        this.triggerSearch(this.searchField().value[0]);
         return new Search().awaitSearchPage()
     }
 

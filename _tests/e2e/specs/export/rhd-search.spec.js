@@ -12,21 +12,31 @@ describe('Search Page', function () {
         search = new Search();
     });
 
-    it('@sanity : should allow users to search for content via site-nav search field', function () {
+    it('@sanity should ensure dcp is operational', function () {
+        search.for('rhel');
+        expect(search.results.all().value.length).to.be.gt(0);
+    });
+
+    it('should allow users to search for content via site-nav search field', function () {
         home.open('/');
         siteNav.searchFor('hello world');
         expect(search.results.all().value.length).to.be.gt(0);
     });
 
+    it('should not alert when user searches via site-nav search field containing malicious scripts', function () {
+        home.open('/');
+        siteNav.searchFor('%3Cscript%3Ealert');
+        expect(search.hasAlert()).to.be.false
+    });
+
     it("should default result sorting should be 'Relevance'", function () {
-        search.open();
+        search.for('rhel');
         let resultSort = search.resultSort.get();
         expect(resultSort).to.equal('relevance');
     });
 
     it("should sort results by 'Most Recent'", function () {
-        home.open('/');
-        siteNav.searchFor('cdk');
+        search.for('java');
         search.resultSort.sort('Most Recent');
         let sR = search.results.all();
         let firstResult = search.results.dateFor(1);
@@ -39,8 +49,8 @@ describe('Search Page', function () {
     });
 
     it('should filter results by Content Type', function () {
-        home.open('/');
-        siteNav.searchFor('java');
+        search
+            .for('java');
         search
             .filter.choose('Content Type', 'APIs and Docs');
         search
@@ -49,8 +59,8 @@ describe('Search Page', function () {
     });
 
     it('should filter results by Product', function () {
-        home.open('/');
-        siteNav.searchFor('java');
+        search
+            .for('java');
         search
             .filter.choose('Product', 'Red Hat Enterprise Linux');
         search
@@ -59,8 +69,8 @@ describe('Search Page', function () {
     });
 
     it('should filter results by Topic', function () {
-        home.open('/');
-        siteNav.searchFor('java');
+        search
+            .for('java');
         search
             .filter.choose('Topic', 'Containers');
         search
@@ -69,8 +79,8 @@ describe('Search Page', function () {
     });
 
     it('should clear search filters', function () {
-        home.open('/');
-        siteNav.searchFor('java');
+        search
+            .for('java');
         search
             .filter.choose('Topic', 'Containers');
         search
@@ -82,15 +92,9 @@ describe('Search Page', function () {
         expect(search.filter.active().isVisible()).to.be.false
     });
 
-    it('should not alert when user searches via site-nav search field containing malicious scripts', function () {
-        home.open('/');
-        siteNav.searchFor('%3Cscript%3Ealert');
-        expect(search.hasAlert()).to.be.false
-    });
-
     it('should display a product associated with a OneBox at the top of the results', function () {
-        home.open('/');
-        siteNav.searchFor('cdk');
+        search
+            .for('cdk');
         search.results.awaitResultsFor('cdk');
         expect(search.oneBox.title()).to.eq('Red Hat Container Development Kit');
     });

@@ -58,7 +58,7 @@ exports.config = {
 
     deprecationWarnings: false,
 
-    logLevel: 'silent',
+    logLevel: 'verbose',
 
     coloredLogs: true,
 
@@ -107,6 +107,8 @@ exports.config = {
         const log4js = require('log4js');
         global.logger = log4js.getLogger();
         global.logger.level = 'debug';
+
+        browser.windowHandleSize({width:1280, height:870});
 
     },
 

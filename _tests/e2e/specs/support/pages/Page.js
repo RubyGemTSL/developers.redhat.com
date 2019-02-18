@@ -22,7 +22,6 @@ export class Page extends PageExtension {
         }
 
         this.hideCookieBanner();
-
         return res;
     }
 
@@ -39,12 +38,4 @@ export class Page extends PageExtension {
         return selector.trim();
     }
 
-    awaitIsLoggedIn(siteUser) {
-        try {
-            return this.awaitIsNotVisible('.login', 90000) && this.awaitIsVisible('.logged-in', 90000) &&
-                this.waitForSelectorContainingText('.logged-in-name', `${siteUser['firstName']} ${siteUser['lastName']}`, 80000);
-        } catch (e) {
-            throw Error('user was not logged in after 80 seconds!');
-        }
-    }
 }
