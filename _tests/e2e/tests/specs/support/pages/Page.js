@@ -5,4 +5,10 @@ export default class Page {
     open(path) {
         Driver.visit(config.baseUrl + path);
     }
+
+    drupalHost() {
+        const parsedUrl = require('url').parse(config.baseUrl);
+        const prNumber = parseInt(parsedUrl.pathname.split('/')[2]);
+        return `http://rhdp-jenkins-slave.lab4.eng.bos.redhat.com:${(35000 + prNumber)}`;
+    }
 }

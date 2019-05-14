@@ -1,5 +1,5 @@
-import GeneralErrorPage from '../support/pages/website/General-error.page';
-import Driver from '../support/utils/Driver.Extension';
+import GeneralErrorPage from './support/pages/website/General-error.page';
+import Driver from './support/utils/Driver.Extension';
 
 describe('General Error Page', function() {
     // eslint-disable-next-line no-invalid-this

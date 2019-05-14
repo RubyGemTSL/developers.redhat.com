@@ -1,5 +1,5 @@
-import Error404Page from '../support/pages/website/404-error.page';
-import Driver from '../support/utils/Driver.Extension';
+import Error404Page from './support/pages/website/404-error.page';
+import Driver from './support/utils/Driver.Extension';
 
 describe('404 Error Page', function() {
     // eslint-disable-next-line no-invalid-this

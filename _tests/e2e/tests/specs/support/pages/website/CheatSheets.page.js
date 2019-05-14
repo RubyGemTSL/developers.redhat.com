@@ -7,7 +7,7 @@ export class CheatSheets extends Page {
     get thankYou() {return $('.thankyou');}
 
     open(cheatSheet) {
-        super.open(`/cheat-sheets/${cheatSheet}/`.toString());
+        super.open(`/cheat-sheets/${cheatSheet}/`);
         this.awaitLoaded();
         return this;
     }

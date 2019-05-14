@@ -1,12 +1,12 @@
-import Home from '../support/pages/website/Home.page';
-import Search from '../support/pages/website/Search.page';
-import NavigationBar from '../support/pages/website/NavigationBar.section';
-import SearchResults from '../support/pages/website/components/search/SearchResults';
-import SearchResultSort from '../support/pages/website/components/search/SearchResultSort';
-import SearchFilter from '../support/pages/website/components/search/SearchFilter';
-import SearchOneBox from '../support/pages/website/components/search/SearchOneBox';
+import Home from './support/pages/website/Home.page';
+import Search from './support/pages/website/Search.page';
+import NavigationBar from './support/pages/website/NavigationBar.section';
+import SearchResults from './support/pages/website/components/search/SearchResults';
+import SearchResultSort from './support/pages/website/components/search/SearchResultSort';
+import SearchFilter from './support/pages/website/components/search/SearchFilter';
+import SearchOneBox from './support/pages/website/components/search/SearchOneBox';
 
-import Driver from '../support/utils/Driver.Extension';
+import Driver from './support/utils/Driver.Extension';
 
 describe('Search Page', function() {
     // eslint-disable-next-line no-invalid-this
