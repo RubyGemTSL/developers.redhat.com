@@ -4,9 +4,9 @@ services:
     build: ..
     user: '1000'
     volumes:
-    - ../../../:/developers.redhat.com/_tests/e2e
+    - ../../../:/developers.redhat.com
     - ../tmp_downloads:/testing/tmp_downloads
-    - ../report/desktop-report:/testing/report/${RHD_TEST_PROFILE}-report
+    - ../report/desktop-report:/testing/_tests/e2e/report/${RHD_TEST_PROFILE}-report
     entrypoint:
     - '/bin/bash'
     - '-c'
@@ -22,6 +22,7 @@ services:
     - RHD_JS_DRIVER
     - RHD_BASE_URL
     - RHD_TEST_PROFILE
+    - RHD_TEST_TAGS
     - RHD_DRUPAL_ADMIN_USERNAME
     - RHD_DRUPAL_ADMIN_PASSWORD
     - RHD_KEYCLOAK_ADMIN_USERNAME
