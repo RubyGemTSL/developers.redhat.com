@@ -1,7 +1,7 @@
 import Login from './support/pages/drupal/Login.page';
 import Config from './support/pages/drupal/Config.page';
 
-describe('Drupal', function() {
+tags('desktop').describe('Drupal', function() {
     // eslint-disable-next-line no-invalid-this
     this.retries(2);
 
