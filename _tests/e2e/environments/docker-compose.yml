@@ -2,6 +2,7 @@ version: '2'
 services:
   rhd_e2e_testing:
     build: ..
+    user: '1000'
     volumes:
     - ../../../:/developers.redhat.com/_tests/e2e
     - ../tmp_downloads:/testing/tmp_downloads
@@ -9,7 +10,7 @@ services:
     entrypoint:
     - '/bin/bash'
     - '-c'
-    - "npm test -- --profile=$$RHD_TEST_PROFILE --base-url=$$RHD_BASE_URL --browser=$$RHD_JS_DRIVER --tags=$$RHD_TEST_TAGS"
+    - "source /etc/scl_enable && ruby /developers.redhat.com/_docker/lib/pull_request/exec_with_git_hub_status_wrapper.rb npm test -- --profile=$$RHD_TEST_PROFILE --base-url=$$RHD_BASE_URL --browser=$$RHD_JS_DRIVER --tags=$$RHD_TEST_TAGS"
     working_dir: /testing
     environment:
     - github_status_enabled
