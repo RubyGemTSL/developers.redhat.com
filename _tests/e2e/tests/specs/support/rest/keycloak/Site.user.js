@@ -29,26 +29,6 @@ class User {
         return user;
     }
 
-    productionSiteUser() {
-        const details = {
-            title: this._selectRandom(['Mr', 'Mrs']),
-            firstName: 'Automated',
-            lastName: 'Test-User',
-            email: 'redhat-developers-testers@redhat.com',
-            username: 'redhat-developers-testers',
-            password: 'P@$$word01',
-            company: 'Red Hat',
-            phoneNumber: '019197544950',
-            country: 'US',
-            addressLineOne: '100 E Davie St',
-            city: 'Raleigh',
-            state: 'NC',
-            postalCode: '27601',
-            countryCode: 'US',
-        };
-        return details;
-    }
-
     createOpenshiftUser() {
         const user = this.generate();
         const itAdmin = new ItAdmin();

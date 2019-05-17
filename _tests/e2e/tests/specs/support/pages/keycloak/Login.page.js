@@ -22,16 +22,11 @@ class Login extends Page {
         return Driver.awaitIsDisplayed(this.step2);
     }
 
-    isCurrent() {
-        this.awaitLogin();
-        return Driver.isVisible(this.usernameField);
-    }
-
-    with(user) {
-        Driver.type(user.email, this.usernameField);
+    with(username, password) {
+        Driver.type(username, this.usernameField);
         Driver.click(this.nextBtn);
         this.awaitStepTwo();
-        Driver.type(user.password, this.passwordField);
+        Driver.type(password, this.passwordField);
         return Driver.click(this.loginButton);
     }
 }
