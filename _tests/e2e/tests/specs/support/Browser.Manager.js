@@ -24,7 +24,7 @@ class Browser {
             fs.mkdirSync(pathToChromeDownloads);
         }
 
-        const chromeArgs = ['--headless', '--no-sandbox', '--disable-gpu', '--disable-extensions', '--disable-infobars',
+        const chromeArgs = ['--user-data-dir=/tmp','--incognito', '--headless', '--no-sandbox', '--disable-gpu', '--disable-extensions', '--disable-infobars',
             '--disable-dev-shm-usage', '--disable-web-security', '--user-agent=Red Hat Developers Testing'];
 
         return {
@@ -34,6 +34,8 @@ class Browser {
                 args: chromeArgs,
                 useAutomationExtension: false,
                 prefs: {
+                    "safebrowsing.enabled" : false,
+                    "safebrowsing.disable_download_protection" : true,
                     "download": {
                         "default_directory": pathToChromeDownloads,
                         "prompt_for_download": false,

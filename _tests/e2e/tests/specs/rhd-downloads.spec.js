@@ -12,6 +12,7 @@ tags('desktop').describe('Download Manager', function() {
     beforeEach(function() {
         DownloadDir.clear(global.downloadDir);
         Utils.cleanSession();
+        Utils.allowDownloads();
     }, 2);
 
     it('should allow users to login in and download RHEL', function() {

@@ -11,6 +11,11 @@ export default class Driver {
         }
     }
 
+    static allowDownloads() {
+        browser.sendCommand('Page.setDownloadBehavior', {'behavior': 'allow', 'downloadPath': '/testing/tmp_downloads'})
+    }
+
+
     static enter() {
         return this.key("\uE007");
     }

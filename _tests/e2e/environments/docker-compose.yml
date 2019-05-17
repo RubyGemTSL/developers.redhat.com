@@ -6,12 +6,11 @@ services:
     volumes:
     - ../../../:/developers.redhat.com
     - ../tmp_downloads:/testing/tmp_downloads
-    - ../report/${RHD_TEST_PROFILE}-report:/testing/_tests/e2e/report/${RHD_TEST_PROFILE}-report
+    - ../report/:/testing/report
     entrypoint:
     - '/bin/bash'
     - '-c'
-    - "source /etc/scl_enable && ruby /developers.redhat.com/_docker/lib/pull_request/exec_with_git_hub_status_wrapper.rb npm test -- --profile=$$RHD_TEST_PROFILE --base-url=$$RHD_BASE_URL --browser=$$RHD_JS_DRIVER --tags=$$RHD_TEST_TAGS"
-    - 'cp report/$$RHD_TEST_PROFILE-report/index.html report/$$RHD_TEST_PROFILE-report/index.html'
+    - "source /etc/scl_enable && ruby /developers.redhat.com/_docker/lib/pull_request/exec_with_git_hub_status_wrapper.rb npm test -- --profile=$$RHD_TEST_PROFILE --base-url=$$RHD_BASE_URL --browser=$$RHD_JS_DRIVER --tags=$$RHD_TEST_TAGS --spec ./tests/specs/rhd-downloads.spec.js"
     working_dir: /testing
     environment:
     - github_status_enabled
@@ -20,12 +19,14 @@ services:
     - github_status_repo=redhat-developer/developers.redhat.com
     - github_status_target_url=${BUILD_URL}artifact/_tests/e2e/report/${RHD_TEST_PROFILE}-report/index.html
     - github_status_sha1
-    - RHD_JS_DRIVER
-    - RHD_BASE_URL
-    - RHD_TEST_PROFILE
+    - RHD_JS_DRIVER=chrome
+    - RHD_BASE_URL=https://developers-pr.stage.redhat.com/pr/2946/export
+    - RHD_TEST_PROFILE=desktop
     - RHD_TEST_TAGS
     - RHD_DRUPAL_ADMIN_USERNAME
     - RHD_DRUPAL_ADMIN_PASSWORD
     - RHD_KEYCLOAK_ADMIN_USERNAME
     - RHD_KEYCLOAK_ADMIN_PASSWORD
-    - no_proxy=localhost, 127.0.0.1
+#    - no_proxy=localhost, 127.0.0.1
+    - http_proxy
+    - https_proxy
