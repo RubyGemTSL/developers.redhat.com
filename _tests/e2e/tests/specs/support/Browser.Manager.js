@@ -24,8 +24,7 @@ class Browser {
             fs.mkdirSync(pathToChromeDownloads);
         }
 
-        const chromeArgs = ['--user-data-dir=/tmp','--incognito', '--headless', '--no-sandbox', '--disable-gpu', '--disable-extensions', '--disable-infobars',
-            '--disable-dev-shm-usage', '--disable-web-security', '--user-agent=Red Hat Developers Testing'];
+        const chromeArgs = ['--user-data-dir=/tmp','--incognito', '--headless', '--no-sandbox', '--disable-gpu', '--disable-extensions', '--disable-infobars', '--disable-dev-shm-usage', '--disable-web-security', '--user-agent=Red Hat Developers Testing'];
 
         return {
             "browserName": 'chrome',

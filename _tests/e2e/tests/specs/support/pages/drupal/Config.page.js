@@ -3,7 +3,7 @@ import Driver from "../../utils/Driver.Extension";
 
 export class Config extends Page {
     open() {
-        super.open(this.drupalHost() + '/admin/config/development/configuration')
+        Driver.visit(this.drupalHost() + '/admin/config/development/configuration')
     }
 
     source() {
