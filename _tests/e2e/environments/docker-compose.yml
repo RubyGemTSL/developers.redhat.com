@@ -10,7 +10,8 @@ services:
     entrypoint:
     - '/bin/bash'
     - '-c'
-    - "source /etc/scl_enable && ruby /developers.redhat.com/_docker/lib/pull_request/exec_with_git_hub_status_wrapper.rb npm test -- --profile=$$RHD_TEST_PROFILE --base-url=$$RHD_BASE_URL --browser=$$RHD_JS_DRIVER --tags=$$RHD_TEST_TAGS && cp report/$$RHD_TEST_PROFILE-report/index.html report/$$RHD_TEST_PROFILE-report/index.html"
+    - "source /etc/scl_enable && ruby /developers.redhat.com/_docker/lib/pull_request/exec_with_git_hub_status_wrapper.rb npm test -- --profile=$$RHD_TEST_PROFILE --base-url=$$RHD_BASE_URL --browser=$$RHD_JS_DRIVER --tags=$$RHD_TEST_TAGS"
+    - 'cp report/$$RHD_TEST_PROFILE-report/index.html report/$$RHD_TEST_PROFILE-report/index.html'
     working_dir: /testing
     environment:
     - github_status_enabled
