@@ -1,0 +1,9 @@
+uuid: 984992b2-8f3c-4e53-a70b-7295108b2148
+langcode: en
+status: true
+dependencies: {  }
+id: video_hero
+label: 'Video Hero'
+description: ''
+visual_styles: 'full-width-video|Full width video|Video will take-up the entire section (full width video, and no title or description will be displayed)'
+new_revision: true

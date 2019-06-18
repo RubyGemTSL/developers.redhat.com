@@ -1,0 +1,21 @@
+uuid: e3927914-1582-45d2-ae3f-60af22978b0f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: qdkbFDeCmDzclClKd8CPPIOFr28snBypEUvrjBAlD9E
+id: node__article
+label: 'Content: Article'
+tags:
+  referrer: no-referrer
+  og_description: '[current-page:title]'
+  og_determiner: the
+  og_image: 'http://design.jboss.org/redhatdeveloper/website/redhatdeveloper_1_0/social/images/RHD_twitteravatar.jpg'
+  og_site_name: '[site:name]'
+  og_title: '[current-page:title]'
+  og_url: '[node:url]/'
+  twitter_cards_description: '[current-page:title]'
+  twitter_cards_image: 'http://design.jboss.org/redhatdeveloper/website/redhatdeveloper_1_0/social/images/RHD_twitteravatar.jpg'
+  twitter_cards_site: '@rhdevelopers'
+  twitter_cards_title: '[current-page:title]'
+  twitter_cards_type: summary

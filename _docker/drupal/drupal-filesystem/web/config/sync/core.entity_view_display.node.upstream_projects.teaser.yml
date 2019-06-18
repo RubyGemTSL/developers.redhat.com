@@ -1,0 +1,34 @@
+uuid: 8adcff50-1e33-4cce-9f9e-fdbe5168e663
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.upstream_projects.field_link_to_project
+    - field.field.node.upstream_projects.field_link_to_repo
+    - field.field.node.upstream_projects.field_logo
+    - node.type.upstream_projects
+  module:
+    - compose
+    - field_layout
+    - user
+third_party_settings:
+  field_layout:
+    id: layout_disabled
+    settings: {  }
+id: node.upstream_projects.teaser
+targetEntityType: node
+bundle: upstream_projects
+mode: teaser
+content:
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_link_to_project: true
+  field_link_to_repo: true
+  field_logo: true
+  langcode: true
+  published_at: true

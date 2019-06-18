@@ -1,0 +1,9 @@
+uuid: 7c9f07cd-b6d3-4d72-bf79-e7e72a6b5f23
+langcode: en
+status: true
+dependencies: {  }
+id: cta_form
+label: 'CTA Form'
+description: 'Displays content with an embed form. Use "Sidebar form" visual style to display the form as a sidebar.'
+visual_styles: "sidebar-form|Sidebar form|Show the form as a sidebar\r\ncentered|Centered|Center the title and content\r\nuse-h1|Use Heading 1|Use H1 markup and styling for the title\r\nbackground-gray|Gray background|Gray background on the assembly\r\nno-padding-top|No padding top|Remove top padding from this assembly\r\nno-padding-bottom|No padding-bottom|Remove bottom padding from this assembly"
+new_revision: true

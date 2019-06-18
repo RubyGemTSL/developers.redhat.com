@@ -1,0 +1,9 @@
+uuid: c8881d3c-b764-4cb9-81ed-3a709acda463
+langcode: en
+status: true
+dependencies: {  }
+id: rich_text_columns
+label: 'Rich Text Columns'
+description: ''
+visual_styles: "three-up|Three Across|Three columns\r\nassembly-bigger-image|Bigger image|Use a bigger image\r\nassembly-dark|Dark|Dark background with white type. You can use this if you provide a dark image background as well.\r\nno-padding-top|No padding top|Remove top padding from this assembly\r\nno-padding-bottom|No padding-bottom|Remove bottom padding from this assembly"
+new_revision: true

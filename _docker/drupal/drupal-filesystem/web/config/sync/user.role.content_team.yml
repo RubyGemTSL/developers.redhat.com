@@ -1,0 +1,26 @@
+uuid: 9185480c-6ae2-475c-afab-86ed8f03278a
+langcode: en
+status: true
+dependencies:
+  module:
+    - lightning_core
+third_party_settings:
+  lightning_core:
+    description: ''
+_core:
+  default_config_hash: 26LhAc_d9bFKzf2EhBhT0y84AHPsL9OD5FoDVfUwbGs
+id: content_team
+label: 'Content Reviewer'
+weight: -5
+is_admin: null
+permissions:
+  - 'bypass node access'
+  - 'create media'
+  - 'delete own promotion_card content'
+  - 'edit own landing_page content'
+  - 'edit own learning_path content'
+  - 'edit own rh_certification_exam content'
+  - 'edit own rh_training_class content'
+  - 'use 00c7e3ae transition needs_review_draft'
+  - 'use 00c7e3ae transition needs_review_needs_review'
+  - 'view moderation states'
