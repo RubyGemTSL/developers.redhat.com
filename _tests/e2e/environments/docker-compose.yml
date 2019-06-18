@@ -1,0 +1,43 @@
+version: '2.1'
+services:
+  rhd_e2e_testing:
+    build:
+      context: '..'
+    shm_size: '3gb'
+    user: '1000'
+    volumes:
+    - ../../../:/developers.redhat.com
+    - ../tmp_downloads:/testing/tmp_downloads
+    - ../report:/testing/report
+    entrypoint:
+    - '/bin/bash'
+    - '-c'
+    - "source /etc/scl_enable && ruby /developers.redhat.com/_docker/lib/pull_request/exec_with_git_hub_status_wrapper.rb npm run e2e:ci -- --profile=$$RHD_TEST_PROFILE --base-url=$$RHD_BASE_URL --browser=$$RHD_JS_DRIVER --tags=$$RHD_TEST_TAGS"
+    working_dir: /testing
+    environment:
+    - github_status_enabled
+    - github_status_api_token
+    - github_status_context
+    - gigit thub_status_repo=redhat-developer/developers.redhat.com
+    - github_status_target_url=${BUILD_URL}artifact/_tests/e2e/report/${RHD_TEST_PROFILE}-report/index.html
+    - github_status_sha1
+    - RHD_JS_DRIVER
+    - RHD_BASE_URL
+    - RHD_TEST_PROFILE
+    - RHD_TEST_TAGS
+    - RHD_DRUPAL_ADMIN_USERNAME
+    - RHD_DRUPAL_ADMIN_PASSWORD
+    - RHD_KEYCLOAK_ADMIN_USERNAME
+    - RHD_KEYCLOAK_ADMIN_PASSWORD
+    - GRID_HOST=chrome
+    - GRID_PORT=4444
+
+  chrome:
+    image: selenium/standalone-chrome:3.141.59-radium
+    volumes:
+    - /dev/shm:/dev/shm
+    - ../tmp_downloads:/home/e2e/developers.redhat.com/_tests/e2e/tmp_downloads
+    ports:
+    - "5900"
+    links:
+    - rhd_e2e_testing
